@@ -7,29 +7,6 @@ class CustomUserLoginRespo {
 /* -------------------------------------------------------------------------- */
 /*                                this is LOGIN                               */
 /* -------------------------------------------------------------------------- */
-  final FlutterSecureStorage storage = new FlutterSecureStorage();
-  // 1. ======TOKEN HAS TOKEN
-  Future<bool> loginhasToken() async {
-    var value = await storage.read(key: 'usertoken');
-    print('this is token ${value}');
-    if (value != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // 2. ======== TOKEN PERSISTIT
-  Future<void> loginpersistToken(String usertoken) async {
-    await storage.write(key: 'usertoken', value: usertoken);
-  }
-
-  // 3. ======= TOKEN DELETE ==========
-  Future<void> logindeleteToken() async {
-    storage.delete(key: 'usertoken');
-    storage.deleteAll();
-  }
-
   // LOGIN PAGE
   Future<String> loginnow(
       {required String phone, required String password}) async {
@@ -37,71 +14,73 @@ class CustomUserLoginRespo {
     try {
       var res = await http.post(
         Uri.parse(Baseurl),
-        // body: jsonEncode(res),
-        body: {
-          "username": phone,
-          "password": password,
-        },
+        body: json.encode({"phone": phone, "password": password}),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
         },
       );
 
-      var data = json.decode(res.body) as Map;
+      var data = json.decode(res.body);
       print(' this is status code :- ${res.statusCode}');
-      if (res.statusCode == 200) {
-        return "success";
+
+      if (res.statusCode == 200 || data.containsKey("token")) {
+        // print(' this storag read key  ${storage.read(key: 'token')}');
+        return data["token"];
       }
-      if (res.statusCode == 404) {
-        return "not Valid ";
-      } else {
-        print(res.body);
-        // server error
-        return "err";
-      }
+      return 'errror';
     } catch (SocketException) {
       // fetching error
       return "err ${SocketException}";
+      // return false;
     }
-    //   if (data.containsKey("token")) {
-    //     storage.setItem("token", data['token']);
-    //     print(storage.getItem('token'));
-    //     return true;
-    //   }
-    //   return false;
-    // } catch (e) {
-    //   print("e loginNow");
-    //   print(e);
-    //   return false;
-    // }
   }
 
   // // 2.   SIGNUP PAGE ========================
-  // Future<bool> registernow(
-  //     String email, String phone, String fullname, String password) async {
-  //   String Baseurl = "https://reqres.in/api/register";
-  //   try {
-  //     var res = await http.post(Uri.parse(Baseurl),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: json.encode({
-  //           "email": email,
-  //           "fullname": fullname,
-  //           "phone": phone,
-  //           "password": password
-  //         }));
+  Future<String> registernow(
+      {required String email,
+      required String phone,
+      required String fullname,
+      required String password}) async {
+    String Baseurl = "https://aperahwork.herokuapp.com/crusr";
+    try {
+      var res = await http.post(Uri.parse(Baseurl),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: json.encode({
+            "email": email,
+            "fullname": fullname,
+            "phone": phone,
+            "password": password
+          }));
 
-  //     var data = json.decode(res.body) as Map;
-  //     print(data);
-  //     if (data["error"] == false) {
-  //       return true;
-  //     }
-  //     return false;
-  //   } catch (e) {
-  //     print("e loginNow");
-  //     print(e);
-  //     return false;
-  //   }
-  // }
+      var data = json.decode(res.body) as Map;
+      print(data);
+      if (res.statusCode == 200 || data.containsKey("regtoken")) {
+        // var hastoken = storage.setItem("token", data['token']);
+        // print('set token ${hastoken}');
+        // print(storage.getItem('token'));
+        // return true;
+        return data['regtoken'];
+      }
+
+      // return false;
+      return "errror";
+    } catch (e) {
+      print("e loginNow");
+      print(e);
+      // return false;
+      return "errror";
+    }
+  }
 }
+
+//   Future<String> login(String phone, String password) async {
+//     Response response = await _dio.post(loginUrl, data: {
+//       "email": phone,
+//       "password": password,
+//     });
+//     return response.data["token"];
+//   }
+
+// }

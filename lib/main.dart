@@ -1,65 +1,133 @@
-import 'package:first_ecom/Backend/Logic/Bloc/Login/userlogin_bloc.dart';
-import 'package:first_ecom/Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
-import 'package:first_ecom/Backend/Respo/CNP_Respo/new_auth_respo/new_custlogin_respo.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/Register/register_bloc.dart';
+import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
-import 'package:first_ecom/Fortend/new_auth_screen/new_login_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:bloc/bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_platform/universal_platform.dart';
 
+import 'Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
 import 'Backend/Respo/auth/custLogin.dart';
-import 'Fortend/auth_Screen/Login.dart';
 import 'Fortend/auth_Screen/Home.dart';
+import 'Fortend/auth_Screen/Login.dart';
 import 'Fortend/new_auth_screen/new_home.dart';
 
-main() {
-  // final userRepository = CustomUserLoginRespo();
-  runApp(MyApp());
+// / Custom [BlocObserver] which observes all bloc and cubit instances.
+
+/* -------------------------------------------------------------------------- */
+/*                              BLOC PATTERN USED                             */
+/* -------------------------------------------------------------------------- */
+
+class SimpleBlocObserver extends BlocObserver {
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    // print(transition);
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    // print(error);
+    super.onError(bloc, error, stackTrace);
+  }
 }
 
-class MyApp extends StatelessWidget {
-  // final CustomUserLoginRespo userRepository;
+void main() {
+  Bloc.observer = SimpleBlocObserver();
 
-  MyApp({
-    Key? key,
-  }) : super(key: key);
+  final userRepository = CustomUserLoginRespo();
+  final userloginStorage = UserLoginStorage();
+
+  runApp(
+    BlocProvider<UserauthenticateBloc>(
+      create: (context) {
+        return UserauthenticateBloc(userLoginStorage: userloginStorage)
+          ..add(AppStarted());
+      },
+      child: MyApp(userRepository: userRepository),
+    ),
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    MyApp                                   */
+/* -------------------------------------------------------------------------- */
+
+class MyApp extends StatelessWidget {
+  final CustomUserLoginRespo userRepository;
+  MyApp({Key? key, required this.userRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LocalStorage storage = new LocalStorage('usertoken');
-
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => NewCustomUserLoginRespo()),
         ChangeNotifierProvider(create: (ctx) => AllFormValdation()),
+        BlocProvider(
+            create: (ctx) => RegisterBloc(userRepository: userRepository))
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FutureBuilder(
-          future: storage.ready,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (storage.getItem('token') == null) {
-              return NewLoginScrrens();
-            }
-            return NewHomeScreen();
-          },
+        locale: Locale('mn', 'MN'),
+        title: ' MyApp',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        debugShowCheckedModeBanner: false,
+        home: HomeBuilderApp(userRepository: userRepository),
         routes: {
           HomeScreen.routeName: (ctx) => HomeScreen(),
-          // LoginScreen.routeName: (ctx) =>
-          //     LoginScreen(userRepository: userRepository),
-          NewHomeScreen.routeName: (ctx) => NewHomeScreen(),
-          NewLoginScrrens.routeName: (ctx) => NewLoginScrrens(),
+          LoginScreen.routeName: (ctx) =>
+              LoginScreen(userRepository: userRepository),
         },
       ),
     );
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    APP Started time                                     */
+/* -------------------------------------------------------------------------- */
+
+class HomeBuilderApp extends StatelessWidget {
+  final CustomUserLoginRespo userRepository;
+
+  HomeBuilderApp({Key? key, required this.userRepository}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<UserauthenticateBloc, UserauthenticateState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          print(state);
+          if (state is AuthenticatedAuthenticated) {
+            return HomeScreen();
+          }
+          if (state is AuthenticationUnauthenticated) {
+            return ChangeNotifierProvider(
+              create: (context) => AllFormValdation(),
+              child: LoginScreen(
+                userRepository: userRepository,
+              ),
+            );
+          }
+          if (state is AuthenticationLoading) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        });
   }
 }

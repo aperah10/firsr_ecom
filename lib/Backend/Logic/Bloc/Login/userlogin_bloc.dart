@@ -28,7 +28,13 @@ class UserloginBloc extends Bloc<UserloginEvent, UserloginState> {
 
       try {
         final usertoken = await userRepository.loginnow(
-            phone: event.username, password: event.password);
+            phone: event.phone, password: event.password);
+        print('this is user token in login bloc ${usertoken.runtimeType}');
+
+        if (usertoken != 'errror') {
+          authenticationBloc.add(LoggedIn(usertoken: usertoken));
+          yield UserloginInitial();
+        }
         yield UserloginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());

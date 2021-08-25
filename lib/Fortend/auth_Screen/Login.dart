@@ -31,9 +31,7 @@ class LoginScreen extends StatelessWidget {
         );
       },
       child: SingleChildScrollView(
-        child:
-            // LoginForm(userRepository: userRepository )
-            Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
@@ -94,9 +92,9 @@ class _LoginFormState extends State<LoginForm> {
       }
       _form.currentState!.save();
 
-      void isToken = BlocProvider.of<UserloginBloc>(context).add(
+      var isToken = BlocProvider.of<UserloginBloc>(context).add(
         LoginButtonPressed(
-          username: usernameController.text,
+          phone: usernameController.text,
           password: passwordController.text,
         ),
       );
@@ -131,7 +129,7 @@ class _LoginFormState extends State<LoginForm> {
                   controller: usernameController,
                   inputType: TextInputType.emailAddress,
                   formValidator: (String? val) =>
-                      formvalid.mobileValidator(val!),
+                      formvalid.mobileValidator(val),
                 ),
                 FieldF(
                     obscureTxt: true,
@@ -139,7 +137,7 @@ class _LoginFormState extends State<LoginForm> {
                     controller: passwordController,
                     inputType: TextInputType.visiblePassword,
                     formValidator: (String? val) =>
-                        formvalid.passwordValidator(val!)),
+                        formvalid.passwordValidator(val)),
 
                 /* -------------------------------------------------------------------------- */
                 /*                              FORGETEN PASSWORD                             */
