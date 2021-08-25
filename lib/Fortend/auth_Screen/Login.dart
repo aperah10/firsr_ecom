@@ -131,7 +131,7 @@ class _LoginFormState extends State<LoginForm> {
                   controller: usernameController,
                   inputType: TextInputType.emailAddress,
                   formValidator: (String? val) =>
-                      formvalid.mobileValidator(val),
+                      formvalid.mobileValidator(val!),
                 ),
                 FieldF(
                     obscureTxt: true,
@@ -139,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                     controller: passwordController,
                     inputType: TextInputType.visiblePassword,
                     formValidator: (String? val) =>
-                        formvalid.passwordValidator(val)),
+                        formvalid.passwordValidator(val!)),
 
                 /* -------------------------------------------------------------------------- */
                 /*                              FORGETEN PASSWORD                             */

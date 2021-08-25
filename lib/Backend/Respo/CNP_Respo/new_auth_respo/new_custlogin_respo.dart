@@ -6,106 +6,69 @@ import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 
 class NewCustomUserLoginRespo with ChangeNotifier {
-  // // STORAGE FOR TOKEN DATA
   LocalStorage storage = new LocalStorage('usertoken');
-
-  // 1. ======TOKEN HAS TOKEN
-  Future<bool> newLoginhasToken() async {
-    var value = await storage.getItem('usertoken');
-    print('this is token ${value}');
-    if (value != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // 2. ======== TOKEN PERSISTIT
-  Future<void> newLoginpersistToken(String usertoken) async {
-    await storage.setItem('usertoken', usertoken);
-  }
-
-  // 3. ======= TOKEN DELETE ==========
-  Future<void> newLogindeleteToken() async {
-    storage.deleteItem('usertoken');
-    storage.clear();
-  }
-
 /* -------------------------------------------------------------------------- */
 /*                                this is LOGIN                               */
 /* -------------------------------------------------------------------------- */
   // LOGIN PAGE
-  Future<String> newloginNow(
+  Future<bool> newloginNow(
       {required String phone, required String password}) async {
     String Baseurl = "https://aperahwork.herokuapp.com/login/";
     try {
-      var res = await http.post(
-        Uri.parse(Baseurl),
-        // body: jsonEncode(res),
-        body: {
-          "username": phone,
-          "password": password,
-        },
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      );
+      var res = await http.post(Uri.parse(Baseurl),
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+          },
+          body: json.encode({"phone": phone, "password": password}));
 
-      var data = json.decode(res.body) as Map;
+      var data = json.decode(res.body);
       print(' this is status code :- ${res.statusCode}');
-      if (res.statusCode == 200) {
-        return "success";
+
+      if (data.containsKey("token")) {
+        var hastoken = storage.setItem("token", data['token']);
+        print('set token ${hastoken}');
+        print(storage.getItem('token'));
+        return true;
       }
-      if (res.statusCode == 404) {
-        return "not Valid ";
-      } else {
-        print(res.body);
-        // server error
-        return "err";
-      }
+      return false;
     } catch (SocketException) {
       // fetching error
-      return "err ${SocketException}";
+      return false;
     }
-    //   if (data.containsKey("token")) {
-    //     storage.setItem("token", data['token']);
-    //     print(storage.getItem('token'));
-    //     return true;
-    //   }
-    //   return false;
-    // } catch (e) {
-    //   print("e loginNow");
-    //   print(e);
-    //   return false;
-    // }
   }
 
-  // // 2.   SIGNUP PAGE ========================
-  // Future<bool> registernow(
-  //     String email, String phone, String fullname, String password) async {
-  //   String Baseurl = "https://reqres.in/api/register";
-  //   try {
-  //     var res = await http.post(Uri.parse(Baseurl),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: json.encode({
-  //           "email": email,
-  //           "fullname": fullname,
-  //           "phone": phone,
-  //           "password": password
-  //         }));
+  // 2.   SIGNUP PAGE ========================
+  Future<bool> registernow(
+      {required String email,
+      required String phone,
+      required String fullname,
+      required String password}) async {
+    String Baseurl = "https://aperahwork.herokuapp.com/crusr";
+    try {
+      var res = await http.post(Uri.parse(Baseurl),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: json.encode({
+            "email": email,
+            "fullname": fullname,
+            "phone": phone,
+            "password": password
+          }));
 
-  //     var data = json.decode(res.body) as Map;
-  //     print(data);
-  //     if (data["error"] == false) {
-  //       return true;
-  //     }
-  //     return false;
-  //   } catch (e) {
-  //     print("e loginNow");
-  //     print(e);
-  //     return false;
-  //   }
-  // }
+      var data = json.decode(res.body) as Map;
+      print(data);
+      if (res.statusCode == 200 || data.containsKey("token")) {
+        var hastoken = storage.setItem("token", data['token']);
+        print('set token ${hastoken}');
+        print(storage.getItem('token'));
+        return true;
+      }
+
+      return false;
+    } catch (SocketException) {
+      // fetching error
+      return false;
+    }
+  }
 }

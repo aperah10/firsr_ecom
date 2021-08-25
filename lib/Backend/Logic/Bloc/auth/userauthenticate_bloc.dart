@@ -23,7 +23,7 @@ class UserauthenticateBloc
     print(event);
     if (event is AppStarted) {
       try {
-        bool hasToken = await userRepository.LoginhasToken();
+        bool hasToken = await userRepository.loginhasToken();
         // bool hasToken = await userLoginStorage.LoginhasToken();
         if (hasToken) {
           yield AuthenticatedAuthenticated();
@@ -37,7 +37,7 @@ class UserauthenticateBloc
     //  2. WHEN EVENT IS LOGIN
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.LoginpersistToken(event.usertoken);
+      await userRepository.loginpersistToken(event.usertoken);
       // await userLoginStorage.LoginpersistToken(event.usertoken);
       yield AuthenticatedAuthenticated();
     }
@@ -45,7 +45,7 @@ class UserauthenticateBloc
     // 3. WHEN EVENT IS LOGGOUT
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await userRepository.LogindeleteToken();
+      await userRepository.logindeleteToken();
       // await userLoginStorage.LogindeleteToken();
       yield AuthenticationUnauthenticated();
     }

@@ -4,12 +4,13 @@ import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
 class CustomUserLoginRespo {
-  // // STORAGE FOR TOKEN DATA
-  LocalStorage storage = new LocalStorage('usertoken');
-
+/* -------------------------------------------------------------------------- */
+/*                                this is LOGIN                               */
+/* -------------------------------------------------------------------------- */
+  final FlutterSecureStorage storage = new FlutterSecureStorage();
   // 1. ======TOKEN HAS TOKEN
   Future<bool> loginhasToken() async {
-    var value = await storage.getItem('usertoken');
+    var value = await storage.read(key: 'usertoken');
     print('this is token ${value}');
     if (value != null) {
       return true;
@@ -20,18 +21,15 @@ class CustomUserLoginRespo {
 
   // 2. ======== TOKEN PERSISTIT
   Future<void> loginpersistToken(String usertoken) async {
-    await storage.setItem('usertoken', usertoken);
+    await storage.write(key: 'usertoken', value: usertoken);
   }
 
   // 3. ======= TOKEN DELETE ==========
   Future<void> logindeleteToken() async {
-    storage.deleteItem('usertoken');
-    storage.clear();
+    storage.delete(key: 'usertoken');
+    storage.deleteAll();
   }
 
-/* -------------------------------------------------------------------------- */
-/*                                this is LOGIN                               */
-/* -------------------------------------------------------------------------- */
   // LOGIN PAGE
   Future<String> loginnow(
       {required String phone, required String password}) async {

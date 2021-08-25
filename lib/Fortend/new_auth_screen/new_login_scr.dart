@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'new_home.dart';
+import 'new_signup_scr.dart';
 
 class NewLoginScrrens extends StatefulWidget {
-  static const routeName = '/new_login-screens';
+  static const routeName = '/new-login-screens';
 
   @override
   _NewLoginScrrensState createState() => _NewLoginScrrensState();
@@ -18,41 +19,43 @@ class _NewLoginScrrensState extends State<NewLoginScrrens> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void _loginNew() async {
-    var isvalid = _form.currentState!.validate();
-    if (!isvalid) {
-      return;
-    }
-    _form.currentState!.save();
-    var istoken = await Provider.of<NewCustomUserLoginRespo>(
-      context,
-      listen: false,
-    ).newloginNow(
-        phone: usernameController.text, password: passwordController.text);
-    if (istoken.isNotEmpty) {
-      Navigator.of(context).pushReplacementNamed(NewHomeScreen.routeName);
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text("Something is wrong.Try Again"),
-              actions: [
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"),
-                )
-              ],
-            );
-          });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final formvalid = Provider.of<AllFormValdation>(context);
+
+    _loginNew() async {
+      var isvalid = _form.currentState!.validate();
+      if (!isvalid) {
+        return "enter valve";
+      }
+      _form.currentState!.save();
+      var istoken = await Provider.of<NewCustomUserLoginRespo>(
+        context,
+        listen: false,
+      ).newloginNow(
+          phone: usernameController.text, password: passwordController.text);
+      print("tis valid $isvalid");
+      print("is token  $istoken");
+      if (istoken == true) {
+        Navigator.of(context).pushReplacementNamed(NewHomeScreen.routeName);
+      } else {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Something is wrong.Try Again"),
+                actions: [
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("OK"),
+                  )
+                ],
+              );
+            });
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +74,7 @@ class _NewLoginScrrensState extends State<NewLoginScrrens> {
                 FieldF(
                   hintText: 'phone',
                   controller: usernameController,
-                  inputType: TextInputType.emailAddress,
+                  inputType: TextInputType.phone,
                   formValidator: (String? val) =>
                       formvalid.mobileValidator(val),
                 ),
@@ -130,6 +133,8 @@ class _NewLoginScrrensState extends State<NewLoginScrrens> {
                 /* -------------------------------------------------------------------------- */
                 /*                           END FROM SUBMIT BUTTON                           */
                 /* -------------------------------------------------------------------------- */
+                ExtraButton(
+                    btnName: 'Signup', createPage: () => NewSignUpScreen()),
               ],
             ),
           ),

@@ -5,7 +5,7 @@ class FieldF extends StatefulWidget {
   late TextInputType inputType;
   late String hintText;
   late TextEditingController controller;
-  String Function(String?) formValidator;
+  String? Function(String?)? formValidator;
 
   FieldF(
       {Key? key,
@@ -17,8 +17,13 @@ class FieldF extends StatefulWidget {
       : super(key: key);
 
   @override
-  _FieldFState createState() =>
-      _FieldFState(inputType, hintText, obscureTxt, controller, formValidator);
+  _FieldFState createState() => _FieldFState(
+        inputType,
+        hintText,
+        obscureTxt,
+        controller,
+        formValidator,
+      );
 }
 
 class _FieldFState extends State<FieldF> {
@@ -26,7 +31,8 @@ class _FieldFState extends State<FieldF> {
   late TextInputType inputType;
   late String hintText;
   late TextEditingController controller;
-  String Function(String?) formValidator;
+  String? Function(String?)? formValidator;
+  // final Function formValidator;
 
   _FieldFState(this.inputType, this.hintText, this.obscureTxt, this.controller,
       this.formValidator);
@@ -75,9 +81,8 @@ class _FieldFState extends State<FieldF> {
 class SubmitButton extends StatelessWidget {
   final String btnName;
   // final Widget Function() createPage;
-  final Function() submitMethod;
-  const SubmitButton(
-      {Key? key, required this.btnName, required this.submitMethod})
+  dynamic submitMethod;
+  SubmitButton({Key? key, required this.btnName, required this.submitMethod})
       : super(key: key);
 
   @override
@@ -86,7 +91,8 @@ class SubmitButton extends StatelessWidget {
         // margin: EdgeInsets.only(top: 30.0, bottom: 35.0),
         child: MaterialButton(
       onPressed: submitMethod,
-      // () {
+      //     () {
+      //   submitMethod();
       //   // Navigator.of(context)
       //   //     .push(MaterialPageRoute(builder: (context) => createPage()));
       // }, // When Click on Button goto Login Screen
