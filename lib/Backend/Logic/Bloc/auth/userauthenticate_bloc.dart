@@ -30,8 +30,17 @@ class UserauthenticateBloc
     print(event);
     if (event is AppStarted) {
       try {
-        // bool hasToken = await userRepository.loginhasToken();
+        // ? THERE ARE TWO METHOD FOR USING TOKEN :-
+        // ? 1. SINGLE TOKEN :- loginhasToken();
+        // ? 2. MULITPLE TOKEN :- reghasToken()=>Register, loginhasToken() => Login
+
         bool hasToken = await userLoginStorage.loginhasToken();
+        // bool reghasToken = await userLoginStorage.reghasToken();
+        // print('this is register token $reghasToken');
+        print('this is login token $hasToken');
+        // if (reghasToken == true || hasToken == true) {
+        //   yield AuthenticatedAuthenticated();
+        // }
         if (hasToken) {
           yield AuthenticatedAuthenticated();
         } else {
@@ -41,6 +50,22 @@ class UserauthenticateBloc
         print(e);
       }
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                           REGISTER TOKEN CHECKING                          */
+    /* -------------------------------------------------------------------------- */
+
+    //  2. WHEN EVENT IS LOGIN
+    if (event is SignedIn) {
+      yield AuthenticationLoading();
+      // await userLoginStorage.regpersistToken(event.regtoken);
+      await userLoginStorage.loginpersistToken(event.regtoken);
+      yield AuthenticatedAuthenticated();
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 LOGIN BLOC                                 */
+    /* -------------------------------------------------------------------------- */
     //  2. WHEN EVENT IS LOGIN
     if (event is LoggedIn) {
       yield AuthenticationLoading();
@@ -56,27 +81,20 @@ class UserauthenticateBloc
       await userLoginStorage.logindeleteToken();
       yield AuthenticationUnauthenticated();
     }
-
-    /* -------------------------------------------------------------------------- */
-    /*                           REGISTER TOKEN CHECKING                          */
-    /* -------------------------------------------------------------------------- */
-    try {
-      // bool hasToken = await userRepository.loginhasToken();
-      bool reghasToken = await userLoginStorage.reghasToken();
-      print('this is register token $reghasToken');
-      if (reghasToken) {
-        yield AuthenticatedAuthenticated();
-      } else {
-        yield AuthenticationUnauthenticated();
-      }
-    } catch (e) {
-      print(e);
-    }
-    //  2. WHEN EVENT IS LOGIN
-    if (event is SignedIn) {
-      yield AuthenticationLoading();
-      await userLoginStorage.regpersistToken(event.regtoken);
-      yield AuthenticatedAuthenticated();
-    }
   }
 }
+
+// try {
+//   bool reghasToken = await userLoginStorage.reghasToken();
+// print('this is register token $reghasToken');
+
+// if (reghasToken) {
+// yield AuthenticatedAuthenticated();
+// }
+//   // bool hasToken = await userRepository.loginhasToken();
+//  else {
+//     yield AuthenticationUnauthenticated();
+//   }
+// } catch (e) {
+//   print(e);
+// }

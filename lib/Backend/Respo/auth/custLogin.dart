@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
 class CustomUserLoginRespo {
+  final userloginStorage = UserLoginStorage();
 /* -------------------------------------------------------------------------- */
 /*                                this is LOGIN                               */
 /* -------------------------------------------------------------------------- */
@@ -61,18 +63,18 @@ class CustomUserLoginRespo {
         // var hastoken = storage.setItem("token", data['token']);
         // print('set token ${hastoken}');
         // print(storage.getItem('token'));
-
-        print('check register token ${data.containsKey("regtoken")}');
-        return data['regtoken'];
+        print('register data token  in RESPO:- ${data["token"]}');
+        print('register token in RESPO:- ${data.containsKey("token")}');
+        return data['token'];
         // return true;
       }
 
       // return false;
-      return "errror";
+      return 'errror';
     } catch (SocketException) {
       print("error $SocketException");
       // return false;
-      return "errror";
+      return 'errror';
     }
   }
 }

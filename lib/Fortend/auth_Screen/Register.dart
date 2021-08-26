@@ -109,7 +109,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        print('this is login ${state}');
+        print(' register state : - ${state}');
         if (state is RegisterFailed) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
@@ -125,7 +125,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 80.0),
+            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 30.0),
             child: Form(
               key: _form,
               child: Column(children: [

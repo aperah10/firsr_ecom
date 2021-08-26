@@ -9,17 +9,6 @@ abstract class UserauthenticateEvent extends Equatable {
 
 class AppStarted extends UserauthenticateEvent {}
 
-class LoggedIn extends UserauthenticateEvent {
-  final String usertoken;
-  LoggedIn({required this.usertoken});
-
-  @override
-  List<Object> get props => [usertoken];
-
-  @override
-  String toString() => 'LoggedIn { usertoken: $usertoken }';
-}
-
 /* -------------------------------------------------------------------------- */
 /*                                SIGNED EVENT                                */
 /* -------------------------------------------------------------------------- */
@@ -31,7 +20,18 @@ class SignedIn extends UserauthenticateEvent {
   List<Object> get props => [regtoken];
 
   @override
-  String toString() => 'LoggedIn { regtoken: $regtoken }';
+  String toString() => 'SigngedIn { regtoken: $regtoken }';
+}
+
+class LoggedIn extends UserauthenticateEvent {
+  final String usertoken;
+  LoggedIn({required this.usertoken});
+
+  @override
+  List<Object> get props => [usertoken];
+
+  @override
+  String toString() => 'LoggedIn { usertoken: $usertoken }';
 }
 
 class LoggedOut extends UserauthenticateEvent {}

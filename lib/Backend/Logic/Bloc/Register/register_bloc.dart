@@ -28,14 +28,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             phone: event.phone,
             fullname: event.fullname,
             password: event.password);
-        print('this is Register token : -  ${user}');
-        if (user != "errror") {
+        print('this is Register token RUNTYPE : -  ${user.runtimeType}');
+        if (user != 'errror') {
           authenticationBloc.add(SignedIn(regtoken: user));
           // yield RegisterSucced(user: user);
           yield RegisterSucced();
-        } else {
-          yield RegisterInitial();
         }
+        yield RegisterInitial();
       } catch (e) {
         yield RegisterFailed(message: e.toString());
       }

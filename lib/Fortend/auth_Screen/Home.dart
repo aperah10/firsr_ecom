@@ -32,10 +32,11 @@ class HomeScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: _seclogoutnew,
-            //     () {
-            //   BlocProvider.of<UserauthenticateBloc>(context).add(LoggedOut());
-            // },
+            onPressed:
+                // _seclogoutnew,
+                () {
+              BlocProvider.of<UserauthenticateBloc>(context).add(LoggedOut());
+            },
           )
         ],
       ),
