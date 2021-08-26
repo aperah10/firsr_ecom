@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
     /*                                CHECK LOGOUT                                */
     /* -------------------------------------------------------------------------- */
     _seclogoutnew() async {
-      await storage.delete(key: 'usertoken');
+      storage.delete(key: 'usertoken');
       storage.deleteAll();
       Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     }

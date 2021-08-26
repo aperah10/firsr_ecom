@@ -127,8 +127,8 @@ class SubmitButton extends StatelessWidget {
 // EXTRA BUTTONS FOR ROW SIGNUP AND
 class ExtraButton extends StatelessWidget {
   final String btnName;
-  final Widget Function() createPage;
-  const ExtraButton({Key? key, required this.btnName, required this.createPage})
+  dynamic createPage;
+  ExtraButton({Key? key, required this.btnName, this.createPage})
       : super(key: key);
 
   @override
@@ -149,8 +149,9 @@ class ExtraButton extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => createPage()));
+                    // Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => createPage()));
+                    Navigator.of(context).pushReplacementNamed(createPage);
                   },
                 )
               ],

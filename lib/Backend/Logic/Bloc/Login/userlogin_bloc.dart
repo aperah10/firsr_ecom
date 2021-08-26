@@ -33,7 +33,7 @@ class UserloginBloc extends Bloc<UserloginEvent, UserloginState> {
 
         if (usertoken != 'errror') {
           authenticationBloc.add(LoggedIn(usertoken: usertoken));
-          yield UserloginInitial();
+          yield LoginSucccess();
         }
         yield UserloginInitial();
       } catch (error) {

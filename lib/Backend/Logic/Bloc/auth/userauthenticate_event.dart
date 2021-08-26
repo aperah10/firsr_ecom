@@ -20,4 +20,18 @@ class LoggedIn extends UserauthenticateEvent {
   String toString() => 'LoggedIn { usertoken: $usertoken }';
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                SIGNED EVENT                                */
+/* -------------------------------------------------------------------------- */
+class SignedIn extends UserauthenticateEvent {
+  final String regtoken;
+  SignedIn({required this.regtoken});
+
+  @override
+  List<Object> get props => [regtoken];
+
+  @override
+  String toString() => 'LoggedIn { regtoken: $regtoken }';
+}
+
 class LoggedOut extends UserauthenticateEvent {}

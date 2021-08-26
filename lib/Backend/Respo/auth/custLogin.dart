@@ -56,19 +56,21 @@ class CustomUserLoginRespo {
 
       var data = json.decode(res.body) as Map;
       print(data);
+      print(' this is status code :- ${res.statusCode}');
       if (res.statusCode == 200 || data.containsKey("regtoken")) {
         // var hastoken = storage.setItem("token", data['token']);
         // print('set token ${hastoken}');
         // print(storage.getItem('token'));
-        // return true;
+
+        print('check register token ${data.containsKey("regtoken")}');
         return data['regtoken'];
+        // return true;
       }
 
       // return false;
       return "errror";
-    } catch (e) {
-      print("e loginNow");
-      print(e);
+    } catch (SocketException) {
+      print("error $SocketException");
       // return false;
       return "errror";
     }

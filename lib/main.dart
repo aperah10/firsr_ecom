@@ -1,6 +1,7 @@
 import 'package:first_ecom/Backend/Logic/Bloc/Register/register_bloc.dart';
 import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
+import 'package:first_ecom/Fortend/auth_Screen/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
@@ -69,8 +70,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => AllFormValdation()),
-        BlocProvider(
-            create: (ctx) => RegisterBloc(userRepository: userRepository))
       ],
       child: MaterialApp(
         locale: Locale('mn', 'MN'),
@@ -84,6 +83,9 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (ctx) => HomeScreen(),
           LoginScreen.routeName: (ctx) =>
               LoginScreen(userRepository: userRepository),
+          SignUpScreen.routeName: (ctx) => SignUpScreen(
+                userRepository: userRepository,
+              ),
         },
       ),
     );
@@ -108,12 +110,15 @@ class HomeBuilderApp extends StatelessWidget {
             return HomeScreen();
           }
           if (state is AuthenticationUnauthenticated) {
-            return ChangeNotifierProvider(
-              create: (context) => AllFormValdation(),
-              child: LoginScreen(
-                userRepository: userRepository,
-              ),
+            return SignUpScreen(
+              userRepository: userRepository,
             );
+            // ChangeNotifierProvider(
+            //   create: (context) => AllFormValdation(),
+            //   child: LoginScreen(
+            //     userRepository: userRepository,
+            //   ),
+            // );
           }
           if (state is AuthenticationLoading) {
             return Scaffold(

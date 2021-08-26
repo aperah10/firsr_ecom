@@ -11,6 +11,7 @@ import 'package:first_ecom/Backend/Respo/auth/custLogin.dart';
 import 'package:provider/provider.dart';
 
 import 'Home.dart';
+import 'Register.dart';
 
 // ====================================================================
 // NEW LOGIN SCREEN
@@ -80,28 +81,28 @@ class _LoginFormState extends State<LoginForm> {
   final _form = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  _onLoginButtonPressed() async {
+    var isvalid = _form.currentState!.validate();
+    if (!isvalid) {
+      return "Enter the Correct Value";
+    }
+    _form.currentState!.save();
+
+    var isToken = BlocProvider.of<UserloginBloc>(context).add(
+      LoginButtonPressed(
+        phone: usernameController.text,
+        password: passwordController.text,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final formvalid = Provider.of<AllFormValdation>(context);
 
-    _onLoginButtonPressed() async {
-      var isvalid = _form.currentState!.validate();
-      if (!isvalid) {
-        return "Enter the Correct Value";
-      }
-      _form.currentState!.save();
-
-      var isToken = BlocProvider.of<UserloginBloc>(context).add(
-        LoginButtonPressed(
-          phone: usernameController.text,
-          password: passwordController.text,
-        ),
-      );
-    }
-
     return BlocListener<UserloginBloc, UserloginState>(
       listener: (context, state) {
+        print('this is login ${state}');
         if (state is LoginFailure) {
           Scaffold.of(context).showSnackBar(
             SnackBar(
@@ -182,6 +183,11 @@ class _LoginFormState extends State<LoginForm> {
                     ],
                   ),
                 ),
+                /* -------------------------------------------------------------------------- */
+                /*                          END  SUBMIT BUTTON                              */
+                /* -------------------------------------------------------------------------- */
+                ExtraButton(
+                    btnName: 'Signup', createPage: SignUpScreen.routeName),
               ]),
             ),
           );

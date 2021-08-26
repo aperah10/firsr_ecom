@@ -24,4 +24,29 @@ class UserLoginStorage {
     storage.delete(key: 'usertoken');
     storage.deleteAll();
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                             REGISTER TOKEN NEW                             */
+  /* -------------------------------------------------------------------------- */
+
+  Future<bool> reghasToken() async {
+    var value = await storage.read(key: 'regtoken');
+    print('this is token ${value}');
+    if (value != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // 2. ======== TOKEN PERSISTIT
+  Future<void> regpersistToken(String usertoken) async {
+    await storage.write(key: 'regtoken', value: usertoken);
+  }
+
+  // 3. ======= TOKEN DELETE ==========
+  Future<void> regeleteToken() async {
+    storage.delete(key: 'regtoken');
+    storage.deleteAll();
+  }
 }

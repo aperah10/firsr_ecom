@@ -56,5 +56,27 @@ class UserauthenticateBloc
       await userLoginStorage.logindeleteToken();
       yield AuthenticationUnauthenticated();
     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                           REGISTER TOKEN CHECKING                          */
+    /* -------------------------------------------------------------------------- */
+    try {
+      // bool hasToken = await userRepository.loginhasToken();
+      bool reghasToken = await userLoginStorage.reghasToken();
+      print('this is register token $reghasToken');
+      if (reghasToken) {
+        yield AuthenticatedAuthenticated();
+      } else {
+        yield AuthenticationUnauthenticated();
+      }
+    } catch (e) {
+      print(e);
+    }
+    //  2. WHEN EVENT IS LOGIN
+    if (event is SignedIn) {
+      yield AuthenticationLoading();
+      await userLoginStorage.regpersistToken(event.regtoken);
+      yield AuthenticatedAuthenticated();
+    }
   }
 }

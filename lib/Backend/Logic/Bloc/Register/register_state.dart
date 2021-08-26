@@ -13,8 +13,8 @@ class RegisterLoading extends RegisterState {}
 
 class RegisterSucced extends RegisterState {
   // User user;
-  String user;
-  RegisterSucced({required this.user});
+  // bool user;
+  // RegisterSucced({required this.user});
 }
 
 class RegisterFailed extends RegisterState {
