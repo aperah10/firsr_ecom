@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'new_login_scr.dart';
 
 class NewSignUpScreen extends StatefulWidget {
+  static const routeName = '/new-reg-screens';
   @override
   _NewSignUpScreenState createState() => _NewSignUpScreenState();
 }
@@ -124,7 +125,7 @@ class _NewSignUpScreenState extends State<NewSignUpScreen> {
               )),
 
               ExtraButton(
-                  btnName: 'Login', createPage: () => NewLoginScrrens()),
+                  btnName: 'Login', createPage: NewLoginScrrens.routeName),
             ],
           ),
         ),

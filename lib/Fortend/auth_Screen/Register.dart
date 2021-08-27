@@ -100,12 +100,16 @@ class _SignUpFormState extends State<SignUpForm> {
           fullname: fullnameController.text));
   }
 //   /* -------------------------------------------------------------------------- */
-//   /*                             end REGISTER METHOD                            */
+  //                        todo end REGISTER METHOD                            */
 //   /* -------------------------------------------------------------------------- */
 
   @override
   Widget build(BuildContext context) {
     final regformvalid = Provider.of<AllFormValdation>(context);
+
+    /* -------------------------------------------------------------------------- */
+    /*                             // todo BLOC START                             */
+    /* -------------------------------------------------------------------------- */
 
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {

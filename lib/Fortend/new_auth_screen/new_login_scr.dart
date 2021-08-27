@@ -134,7 +134,7 @@ class _NewLoginScrrensState extends State<NewLoginScrrens> {
                 /*                           END FROM SUBMIT BUTTON                           */
                 /* -------------------------------------------------------------------------- */
                 ExtraButton(
-                    btnName: 'Signup', createPage: () => NewSignUpScreen()),
+                    btnName: 'Signup', createPage: NewSignUpScreen.routeName),
               ],
             ),
           ),

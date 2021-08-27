@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:localstorage/localstorage.dart';
 
-class UserLoginStorage {
+class UserLoginStorage with ChangeNotifier {
   final FlutterSecureStorage storage = new FlutterSecureStorage();
+
   // 1. ======TOKEN HAS TOKEN
   Future<bool> loginhasToken() async {
     var value = await storage.read(key: 'usertoken');
+
     print('LOGIN TOKEN IN LOCAL STRAOGE :-  ${value}');
     if (value != null) {
       return true;
