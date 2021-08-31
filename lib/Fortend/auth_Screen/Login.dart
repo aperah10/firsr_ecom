@@ -1,15 +1,14 @@
-import 'package:first_ecom/Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
-import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
-import 'package:first_ecom/Fortend/Widget/Form/formWidget.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // my imports
-import 'package:first_ecom/Backend/Logic/Bloc/Login/userlogin_bloc.dart';
-import 'package:first_ecom/Backend/Respo/auth/custLogin.dart';
-import 'package:provider/provider.dart';
-
+import 'package:first_ecom/Backend/Logic/Bloc/Authr/Login/userlogin_bloc.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/Authr/auth/userauthenticate_bloc.dart';
+import 'package:first_ecom/Backend/Respo/Authr/custLogin.dart';
+import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
+import 'package:first_ecom/Fortend/Widget/Form/formWidget.dart';
 import 'Home.dart';
 import 'Register.dart';
 

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:first_ecom/Fortend/Widget/Grid_List_prod.dart/GridWidget.dart';
 
 class ProductGridView extends StatefulWidget {
+  static const routeName = '/grid-product-screens';
   ProductGridView({
     Key? key,
   }) : super(key: key);

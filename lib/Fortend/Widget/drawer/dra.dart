@@ -1,5 +1,7 @@
 import 'package:first_ecom/Fortend/secscrren/Product_Scr/GridViewList.dart';
 import 'package:first_ecom/Fortend/secscrren/Product_Scr/ListView.dart';
+import 'package:first_ecom/Fortend/secscrren/Product_Scr/MixProductList.dart';
+import 'package:first_ecom/Fortend/secscrren/SerachProduct/SearchProduct.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawerList extends StatefulWidget {
@@ -18,10 +20,12 @@ class _MyDrawerListState extends State<MyDrawerList> {
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
         _createDrawerHeader(),
         // top  level widgets
-        itemList(context, () => ProductGridView(),
-            title: 'ProductGridView', icon: Icons.pages_outlined),
         itemList(context, () => ProductListView(),
-            title: 'ProductListView', icon: Icons.pages_outlined),
+            title: ' List Product', icon: Icons.pages_outlined),
+        itemList(context, () => ProductGridView(),
+            title: ' GridView ', icon: Icons.pages_outlined),
+        itemList(context, () => SearchProductPage(),
+            title: ' Search Product', icon: Icons.pages_outlined),
       ])),
     );
   }

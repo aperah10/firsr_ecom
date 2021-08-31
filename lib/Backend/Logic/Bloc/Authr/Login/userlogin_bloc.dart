@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:first_ecom/Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
-import 'package:first_ecom/Backend/Respo/auth/custLogin.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/Authr/auth/userauthenticate_bloc.dart';
+import 'package:first_ecom/Backend/Respo/Authr/custLogin.dart';
+
 import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 
 part 'userlogin_event.dart';

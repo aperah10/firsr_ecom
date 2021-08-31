@@ -12,6 +12,8 @@ class ProductshowBloc extends Bloc<ProductshowEvent, ProductshowState> {
   final ProductRespo prodRespo;
   ProductshowBloc({required this.prodRespo}) : super(ProductshowInitial());
 
+  // @override
+  // ProductshowState get initialState => ProductshowInitial();
   @override
   Stream<ProductshowState> mapEventToState(
     ProductshowEvent event,
@@ -21,6 +23,7 @@ class ProductshowBloc extends Bloc<ProductshowEvent, ProductshowState> {
 
       try {
         List<ProductM> productData = await prodRespo.getProduct();
+
         yield ProductLoadedState(productData: productData);
       } catch (e) {
         yield ProductErrorState(message: e.toString());

@@ -1,6 +1,8 @@
 import 'package:first_ecom/Backend/Logic/Bloc/product/Product_Show/productshow_bloc.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/product/Search_Product/searchproduct_bloc.dart';
 import 'package:first_ecom/Backend/Respo/CNP_Respo/new_auth_respo/new_custlogin_respo.dart';
 import 'package:first_ecom/Backend/Respo/Product/ProdRespo.dart';
+import 'package:first_ecom/Backend/Respo/Product/SerachRespo.dart';
 import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,9 @@ class MainBloc {
       ChangeNotifierProvider(create: (ctx) => AllFormValdation()),
       BlocProvider(
           create: (ctx) => ProductshowBloc(prodRespo: ProductDataRespo())),
+      BlocProvider(
+          create: (ctx) =>
+              SearchproductBloc(searchRepository: SearchPDataRespo()))
     ];
   }
 }

@@ -9,11 +9,14 @@ import 'package:first_ecom/Backend/Respo/CNP_Respo/new_auth_respo/new_custlogin_
 import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
 import 'package:first_ecom/Fortend/new_auth_screen/new_login_scr.dart';
 import 'Backend/Respo/Product/ProdRespo.dart';
-import 'Backend/Respo/auth/custLogin.dart';
+
 import 'Backend/storage/login/LoginStorage.dart';
 import 'Fortend/auth_Screen/Home.dart';
 import 'Fortend/new_auth_screen/new_home.dart';
 import 'Fortend/new_auth_screen/new_signup_scr.dart';
+import 'Fortend/secscrren/Product_Scr/GridViewList.dart';
+import 'Fortend/secscrren/Product_Scr/ListView.dart';
+import 'Fortend/secscrren/Product_Scr/MixProductList.dart';
 import 'ZExtraFile/AllproviderList.dart';
 
 main() {
@@ -65,6 +68,8 @@ class MyApp extends StatelessWidget {
           NewHomeScreen.routeName: (ctx) => NewHomeScreen(),
           NewLoginScrrens.routeName: (ctx) => NewLoginScrrens(),
           NewSignUpScreen.routeName: (ctx) => NewSignUpScreen(),
+          ProductGridView.routeName: (ctx) => ProductGridView(),
+          ProductListView.routeName: (ctx) => ProductListView(),
         },
       ),
     );

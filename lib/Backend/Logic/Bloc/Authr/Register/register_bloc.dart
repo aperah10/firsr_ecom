@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:first_ecom/Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
-import 'package:first_ecom/Backend/Respo/auth/custLogin.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/Authr/auth/userauthenticate_bloc.dart';
+import 'package:first_ecom/Backend/Respo/Authr/custLogin.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';

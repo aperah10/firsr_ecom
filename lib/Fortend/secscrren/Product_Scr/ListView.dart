@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ! My import
 
 class ProductListView extends StatefulWidget {
+  static const routeName = '/list-product-screens';
   ProductListView({Key? key}) : super(key: key);
 
   @override
@@ -37,14 +38,21 @@ class _ProductListViewState extends State<ProductListView> {
           return Center(child: Text(' this is eror ${state.message}'));
         }
         if (state is ProductLoadedState) {
-          return buildHintsList(state.productData);
+          // return buildHintsList(state.productData);
+          return ListShowWidget(productData: state.productData);
         }
         return Container();
       },
     )));
   }
+}
 
-  Widget buildHintsList(List<ProductM> productData) {
+class ListShowWidget extends StatelessWidget {
+  dynamic productData;
+  ListShowWidget({Key? key, this.productData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: new ListView.builder(
           itemCount: productData.length,
@@ -73,5 +81,6 @@ class _ProductListViewState extends State<ProductListView> {
             );
           }),
     );
+    ;
   }
 }

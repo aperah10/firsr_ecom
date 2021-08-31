@@ -27,6 +27,18 @@ class MainProductM {
 
 class ProductM {
   ProductM({
+    // required this.id,
+    // required this.title,
+    // required this.description,
+    // required this.salesPrice,
+    // required this.discountPrice,
+    // required this.ourPrice,
+    // required this.category,
+    // required this.date,
+    // required this.stock,
+    // required this.pic,
+    // required this.offers,
+    // required this.uplod,
     this.id,
     this.title,
     this.description,

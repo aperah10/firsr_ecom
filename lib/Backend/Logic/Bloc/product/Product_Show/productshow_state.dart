@@ -1,11 +1,6 @@
 part of 'productshow_bloc.dart';
 
-abstract class ProductshowState extends Equatable {
-  const ProductshowState();
-
-  @override
-  List<Object> get props => [];
-}
+abstract class ProductshowState extends Equatable {}
 
 class ProductshowInitial extends ProductshowState {
   @override

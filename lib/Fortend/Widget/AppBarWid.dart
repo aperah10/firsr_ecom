@@ -4,7 +4,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   CustomAppBar({
     Key? key,
     required this.titlename,
-    // required this.createPage,
+    this.prodbtn,
     this.createPage,
     this.actions = false,
   })  : preferredSize = Size.fromHeight(kToolbarHeight),
@@ -13,20 +13,22 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String titlename;
   // final Widget Function() createPage;
   dynamic createPage;
+  dynamic prodbtn;
   bool actions = false;
   @override
   final Size preferredSize;
 
   @override
   _CustomAppBarState createState() =>
-      _CustomAppBarState(titlename, createPage, actions);
+      _CustomAppBarState(titlename, createPage, actions, prodbtn);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
   final String titlename;
   dynamic createPage;
   bool act = false;
-  _CustomAppBarState(this.titlename, this.createPage, this.act);
+  dynamic prodbtn;
+  _CustomAppBarState(this.titlename, this.createPage, this.act, this.prodbtn);
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,21 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       padding: EdgeInsets.only(right: 10.0),
                       child: Icon(
                         Icons.search,
+                        color: Colors.black,
+                      )),
+                ),
+                /* -------------------------------------------------------------------------- */
+                /*                      // ! PRODUCT BTN FOR CHANGE VIEW                      */
+                /* -------------------------------------------------------------------------- */
+                GestureDetector(
+                  onTap: prodbtn,
+                  // () {
+                  //   Navigator.of(context).pushReplacementNamed(prodbtn);
+                  // },
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 10.0),
+                      child: Icon(
+                        Icons.list,
                         color: Colors.black,
                       )),
                 )

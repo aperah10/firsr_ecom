@@ -1,4 +1,3 @@
-import 'package:first_ecom/Backend/Logic/Bloc/Register/register_bloc.dart';
 import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:first_ecom/Fortend/Widget/Form/formValdation.dart';
 import 'package:first_ecom/Fortend/auth_Screen/Register.dart';
@@ -7,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_platform/universal_platform.dart';
-
-import 'Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
-import 'Backend/Respo/auth/custLogin.dart';
+import 'Backend/Logic/Bloc/Authr/auth/userauthenticate_bloc.dart';
+import 'Backend/Respo/Authr/custLogin.dart';
 import 'Fortend/auth_Screen/Home.dart';
 import 'Fortend/auth_Screen/Login.dart';
 import 'Fortend/new_auth_screen/new_home.dart';

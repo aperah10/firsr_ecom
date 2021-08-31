@@ -1,3 +1,5 @@
+import 'package:first_ecom/Fortend/RCLS/CartScr.dart';
+
 import 'package:flutter/material.dart';
 
 class GridViewWidget extends StatelessWidget {
@@ -61,8 +63,13 @@ class ListViewBuilderShow extends StatelessWidget {
             ),
             Row(
               children: [
-                btnC(btnname: 'buynow'),
-                btnC(btnname: 'addtocart'),
+                BtnC(
+                  btnname: 'buynow',
+                ),
+                BtnC(
+                  btnname: 'addtocart',
+                  sendPage: CartScreen.routeName,
+                ),
               ],
             )
           ],
@@ -71,11 +78,29 @@ class ListViewBuilderShow extends StatelessWidget {
     );
   }
 
-  // buttons for product
-  Expanded btnC({required String btnname}) {
+  // // buttons for product
+
+}
+
+/* -------------------------------------------------------------------------- */
+/*                     // !ADD TO CART AND BUY NOW BUTTON                     */
+/* -------------------------------------------------------------------------- */
+
+class BtnC extends StatelessWidget {
+  String btnname;
+  dynamic sendPage;
+
+  BtnC({Key? key, required this.btnname, this.sendPage}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
         child: InkWell(
-            onTap: () {},
+            onTap:
+                // sendPage
+                () {
+              Navigator.of(context).pushReplacementNamed(sendPage);
+            },
             child: Container(
                 // height: 40, width: 50,
                 decoration: BoxDecoration(

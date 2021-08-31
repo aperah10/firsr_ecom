@@ -1,4 +1,4 @@
-import 'package:first_ecom/Backend/Logic/Bloc/auth/userauthenticate_bloc.dart';
+import 'package:first_ecom/Backend/Logic/Bloc/Authr/auth/userauthenticate_bloc.dart';
 import 'package:first_ecom/Backend/storage/login/LoginStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
